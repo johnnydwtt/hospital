@@ -77,7 +77,7 @@
                                     <div></div>
                                     <div></div>
                                 </div>
-                                <a class="hex-content">
+                                <a class="hex-content" href="/controllers/list-patientsCtrl.php">
                                     <span class="hex-content-inner">
                                         <span class="icon">
                                             <i class="fa fa-clipboard"></i>

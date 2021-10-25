@@ -10,6 +10,7 @@ class Patient{
     private $_birthdate;
     private $_phone;
     private $_mail;
+    private $_pdo;
 
     public function __construct($lastname,$firstname,$birthdate,$phone,$mail)
     {
@@ -18,24 +19,41 @@ class Patient{
         $this->_birthdate = $birthdate;
         $this->_phone = $phone;
         $this->_mail = $mail;
+        //connection avec la class database 
+        $database = new Database();
+        $this->_pdo = $database->connect();
     }
 
-    public function insertPatient(){
+    public function create()
+    {
         //on écris la requête
-        $sql = 'INSERT INTO `patients`(`lastname`,`firstname`,`birthdate`,`phone`,`mail	`) VALUES (:lastname,:firstname,:birthdate,:phone,:mail)';
+        $sql = 'INSERT INTO `patients`(`lastname`,`firstname`,`birthdate`,`phone`,`mail`) VALUES (:lastname,:firstname,:birthdate,:phone,:mail)';
         //on prépare la requête
-        $query = $pdo->prepare($sql);
+        $sth = $this->_pdo->prepare($sql);
         //on injecte les valeurs
-        $query->bindvalue(":lastname", $lastname, PDO::PARAM_STR);
-        $query->bindvalue(":firstname", $firstname, PDO::PARAM_STR);
-        $query->bindvalue(":phone", $phone, PDO::PARAM_STR);
-        $query->bindvalue(":mail", $mail, PDO::PARAM_STR);
-        $query->bindvalue(":birthdate", $birthdate, PDO::PARAM_STR);
+        $sth->bindvalue(":lastname", $this->_lastname, PDO::PARAM_STR);
+        $sth->bindvalue(":firstname", $this->_firstname, PDO::PARAM_STR);
+        $sth->bindvalue(":phone", $this->_phone, PDO::PARAM_STR);
+        $sth->bindvalue(":mail", $this->_mail, PDO::PARAM_STR);
+        $sth->bindvalue(":birthdate", $this->_birthdate, PDO::PARAM_STR);
         
         //on exécute la requête
-        if(!$query->execute()){
+        if(!$sth->execute()){
             die("une erreur est survenue");
         }
+    }
+
+    public function read()
+    {
+        //on appel connect.php ( notre connexion à la base de données)
+        $sql = 'SELECT `patients`.`lastname`,`patients`.`firstname`,`patients`.`birthDate`,`patients`.`mail`,`patients`.`phone` FROM `patients`';
+        //j'envoie ma requette pour récupérer toutes la tables clients que je stock dans une var
+
+        $sth = $this->_pdo->query($sql);
+
+        $patient=$sth->fetchAll();
+        //je récupère l'intégralité de ma table ( données )
+        
     }
 }
 
