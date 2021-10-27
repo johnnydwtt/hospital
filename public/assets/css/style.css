@@ -114,3 +114,5 @@ button,input,label,select,textarea{font-weight:400}
 .page-home .hexagon-item:nth-last-child(1),.page-home .hexagon-item:nth-last-child(2),.page-home .hexagon-item:nth-last-child(3){-webkit-transform:rotate(30deg) translate(0,0);-moz-transform:rotate(30deg) translate(0,0);-ms-transform:rotate(30deg) translate(0,0);-o-transform:rotate(30deg) translate(0,0);transform:rotate(30deg) translate(0,0)}
 }
 .size-img{height: 250px;}
+.tomato{color: tomato;}
+a{text-decoration: none;}

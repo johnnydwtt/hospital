@@ -7,7 +7,7 @@
       </a>
     </div>
     <div class="col-md-4 d-flex align-items-center justify-content-center">
-      <span class="text-muted">© 2021 Hopital , Web</span>
+      <span class="text-muted">© 2021 Hopital , Joh</span>
     </div>
   </footer>
 </div>

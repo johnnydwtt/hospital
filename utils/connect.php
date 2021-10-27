@@ -1,18 +1,12 @@
 <?php
+require_once(dirname(__FILE__).'/../config/bdd.php');
+
 class Database{
 
-    private $_dsn;
-    private $_username;
-    private $_password;
-
-    public function connect(){
-        $this->_dsn = 'mysql:dbname=hospitale2n;host=localhost;charset=utf8';
-        //data source name // nom et host (charset pour configurer les caract spéc)
-        $this->_username = 'johnny.dw';
-        $this->_password = ']H/ph!EJekuSUq8D';
+    public static function connect(){
         //connection à la base de données
         try {
-            $pdo = new PDO($this->_dsn, $this->_username, $this->_password);
+            $pdo = new PDO(DSN, USERNAME, PASSWORD);
         //je la questionne sur l'authenticité de la base
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_OBJ);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -1,10 +1,11 @@
 <?php
 
 //on se connecte à la base
-require_once(dirname(__FILE__).'/../config/connect.php');
+require_once(dirname(__FILE__).'/../utils/connect.php');
 
 class Patient{
 
+    private $_id;
     private $_lastname;
     private $_firstname;
     private $_birthdate;
@@ -12,49 +13,120 @@ class Patient{
     private $_mail;
     private $_pdo;
 
-    public function __construct($lastname,$firstname,$birthdate,$phone,$mail)
+    public function __construct($lastname = "",$firstname = "",$birthdate = "",$phone = "",$mail = "",$id = "")
     {
+        $this->_id = intval($id);
         $this->_lastname = $lastname;
         $this->_firstname = $firstname;
         $this->_birthdate = $birthdate;
         $this->_phone = $phone;
         $this->_mail = $mail;
         //connection avec la class database 
-        $database = new Database();
-        $this->_pdo = $database->connect();
+        $this->_pdo = Database::connect();
     }
+
 
     public function create()
     {
-        //on écris la requête
-        $sql = 'INSERT INTO `patients`(`lastname`,`firstname`,`birthdate`,`phone`,`mail`) VALUES (:lastname,:firstname,:birthdate,:phone,:mail)';
-        //on prépare la requête
-        $sth = $this->_pdo->prepare($sql);
-        //on injecte les valeurs
-        $sth->bindvalue(":lastname", $this->_lastname, PDO::PARAM_STR);
-        $sth->bindvalue(":firstname", $this->_firstname, PDO::PARAM_STR);
-        $sth->bindvalue(":phone", $this->_phone, PDO::PARAM_STR);
-        $sth->bindvalue(":mail", $this->_mail, PDO::PARAM_STR);
-        $sth->bindvalue(":birthdate", $this->_birthdate, PDO::PARAM_STR);
-        
-        //on exécute la requête
-        if(!$sth->execute()){
-            die("une erreur est survenue");
+        try {
+            $sql = 'INSERT INTO `patients`(`lastname`,`firstname`,`birthdate`,`phone`,`mail`) VALUES (:lastname,:firstname,:birthdate,:phone,:mail)';
+            $sth = $this->_pdo->prepare($sql);
+                    //on injecte les valeurs
+            $sth->bindvalue(":lastname", $this->_lastname, PDO::PARAM_STR);
+            $sth->bindvalue(":firstname", $this->_firstname, PDO::PARAM_STR);
+            $sth->bindvalue(":phone", $this->_phone, PDO::PARAM_STR);
+            $sth->bindvalue(":mail", $this->_mail, PDO::PARAM_STR);
+            $sth->bindvalue(":birthdate", $this->_birthdate, PDO::PARAM_STR);
+
+            if(!$sth->execute()){
+                die("une erreur est survenue");
+            }else {
+                include(dirname(__FILE__).'/../controllers/list-patientsCtrl.php');
+            }
+
+        } catch (\PDOException $ex) {
+            $ex->getMessage();
         }
     }
 
+
     public function read()
     {
-        //on appel connect.php ( notre connexion à la base de données)
-        $sql = 'SELECT `patients`.`lastname`,`patients`.`firstname`,`patients`.`birthDate`,`patients`.`mail`,`patients`.`phone` FROM `patients`';
-        //j'envoie ma requette pour récupérer toutes la tables clients que je stock dans une var
+        
+        $sql = 'SELECT * FROM `patients`';
+        //j'envoie ma requette pour récupérer toutes la tables patients que je stock dans une var
 
         $sth = $this->_pdo->query($sql);
 
         $patient=$sth->fetchAll();
         //je récupère l'intégralité de ma table ( données )
-        
+        return $patient;
     }
+
+    public function view($id)
+    {
+        $sql = 'SELECT * FROM `patients` WHERE `id`= "'.$id.'"';
+        //j'envoie ma requette pour récupérer quelques élément de la table patient de l'id selectionné que je stock dans une var
+        $sth = $this->_pdo->query($sql);
+        $profils=$sth->fetch();
+        //je récupère un élément de ma table ( données )
+        return $profils;
+    }
+
+    public function update()
+    {
+        try{
+            $sql = "UPDATE  `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id";
+
+            $sth = $this->_pdo->prepare($sql);
+
+            $sth->bindvalue(":lastname", $this->_lastname, PDO::PARAM_STR);
+            $sth->bindvalue(":firstname", $this->_firstname, PDO::PARAM_STR);
+            $sth->bindvalue(":phone", $this->_phone, PDO::PARAM_STR);
+            $sth->bindvalue(":mail", $this->_mail, PDO::PARAM_STR);
+            $sth->bindvalue(":birthdate", $this->_birthdate, PDO::PARAM_STR);
+            $sth->bindvalue(":id", $this->_id, PDO::PARAM_INT);
+
+            if($sth->execute()){
+                if ($sth->rowCount()==0) {
+                    $sth->rowCount();
+                } else {
+                    echo '<div class="fs-4 text-center text-success">'.'&#9989; Les modifications sont enregistrée avec succès'.'</div>';
+                }
+                
+                
+            }
+
+            // echo '<div class="fs-4 text-center text-danger">'.'&#10060; Les modifications ont échoué'.'</div>';
+                // }else {
+                //     echo '<div class="fs-4 text-center text-success">'.'&#9989; Les modifications sont enregistrée avec succès'.'</div>';
+                // }
+
+        } catch (\PDOException $ex) {
+            $ex->getMessage();
+        }
+
+    }
+
+    public function delete($id)
+    {
+        try{
+            $sql = 'DELETE FROM `patients` WHERE `id`= "'.$id.'"';
+
+            $sth = $this->_pdo->prepare($sql);
+
+            if(!$sth->execute()){
+                    echo "supréssion erreur";
+                }else {
+                    echo "supréssion effectué avec succès";
+                }
+
+        } catch (\PDOException $ex) {
+            $ex->getMessage();
+        }
+
+    }
+
 }
 
 

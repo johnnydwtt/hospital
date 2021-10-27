@@ -1,12 +1,18 @@
 <?php
+require_once(dirname(__FILE__).'/../models/Patient.php');
 require_once(dirname(__FILE__).'/../utils/connect.php');
 require_once(dirname(__FILE__).'/../utils/regex.php');
-require_once(dirname(__FILE__).'/../models/Patient.php');
+
+
 
 $error= [];
+$id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
+$patient = new Patient();
+$profils=$patient->view($id);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+    
     $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $phone = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING));
@@ -60,16 +66,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $error['birthdate'] = 'Ce champ est requis!';
     }
 
-    if (empty($error)) {
-        $patient=new Patient($lastname,$firstname,$birthdate,$phone,$mail);
-        $patient->create();
+    // ----------------------------------------------------------
+
+    if(empty($error)){
+        $patient = new Patient($lastname,$firstname,$birthdate,$phone,$mail,$id);
+        $patient->update();  
     }
+    
 
 }
 
 
-$title = 'Mon ajout patient - Hospital';
+$title = "Modification du profil";
 
 include(dirname(__FILE__).'/../views/templates/header.php');
-include(dirname(__FILE__).'/../views/add-patient.php');
+include(dirname(__FILE__).'/../views/modif-profil.php');
 include(dirname(__FILE__).'/../views/templates/footer.php');
