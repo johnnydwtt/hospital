@@ -13,7 +13,7 @@ class Patient{
     private $_mail;
     private $_pdo;
 
-    public function __construct($lastname = "",$firstname = "",$birthdate = "",$phone = "",$mail = "",$id = "")
+    public function __construct($lastname = NULL,$firstname = NULL,$birthdate = NULL,$phone = NULL,$mail = NULL,$id = NULL)
     {
         $this->_id = intval($id);
         $this->_lastname = $lastname;
@@ -24,7 +24,8 @@ class Patient{
         //connection avec la class database 
         $this->_pdo = Database::connect();
     }
-
+// **********************************************************************************
+// **********************************************************************************
 
     public function create()
     {
@@ -49,6 +50,8 @@ class Patient{
         }
     }
 
+// **********************************************************************************
+// **********************************************************************************
 
     public function read()
     {
@@ -63,15 +66,39 @@ class Patient{
         return $patient;
     }
 
-    public function view($id)
+// **********************************************************************************
+// **********************************************************************************
+
+    public static function view($id)
     {
-        $sql = 'SELECT * FROM `patients` WHERE `id`= "'.$id.'"';
+        $sql = 'SELECT * FROM `patients` WHERE `id`=:id';
         //j'envoie ma requette pour récupérer quelques élément de la table patient de l'id selectionné que je stock dans une var
-        $sth = $this->_pdo->query($sql);
-        $profils=$sth->fetch();
-        //je récupère un élément de ma table ( données )
-        return $profils;
+        try {
+            $pdo = Database::connect();
+            $sth = $pdo->prepare($sql);
+            $sth->bindvalue(":id", $id, PDO::PARAM_INT);
+            $result=$sth->execute();
+
+            if ($result) {
+                $profile=$sth->fetch();
+                if ($profile) {
+                    return $profile;
+                }else {
+                    throw new PDOException("Le profil n'existe pas");
+                }
+            }else{
+                throw new PDOException("Problème d'execution de requête");
+                
+            }
+            
+        } catch (\PDOException $ex) {
+            return $ex;
+        }
+
     }
+
+// **********************************************************************************
+// **********************************************************************************
 
     public function update()
     {
@@ -97,16 +124,14 @@ class Patient{
                 
             }
 
-            // echo '<div class="fs-4 text-center text-danger">'.'&#10060; Les modifications ont échoué'.'</div>';
-                // }else {
-                //     echo '<div class="fs-4 text-center text-success">'.'&#9989; Les modifications sont enregistrée avec succès'.'</div>';
-                // }
-
         } catch (\PDOException $ex) {
             $ex->getMessage();
         }
 
     }
+
+// **********************************************************************************
+// **********************************************************************************
 
     public function delete($id)
     {
@@ -124,11 +149,13 @@ class Patient{
         } catch (\PDOException $ex) {
             $ex->getMessage();
         }
-
+        
     }
 
 }
 
+// **********************************************************************************
+// **********************************************************************************
 
 
 

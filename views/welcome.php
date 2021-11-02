@@ -82,7 +82,7 @@
                                         <span class="icon">
                                             <i class="fa fa-clipboard"></i>
                                         </span>
-                                        <span class="title">Voir les patients</span>
+                                        <span class="title">Listes patients</span>
                                     </span>
                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -103,12 +103,12 @@
                                     <div></div>
                                     <div></div>
                                 </div>
-                                <a class="hex-content">
+                                <a class="hex-content" href="/controllers/create-appointmentCtrl.php">
                                     <span class="hex-content-inner">
                                         <span class="icon">
-                                            <i class="fa fa-map-signs"></i>
+                                            <i class="fa fa-clipboard"></i>
                                         </span>
-                                        <span class="title">Supprimer un patient</span>
+                                        <span class="title">Crée RDV</span>
                                     </span>
                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1"
                                         xmlns="http://www.w3.org/2000/svg">

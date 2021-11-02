@@ -4,11 +4,9 @@ require_once(dirname(__FILE__).'/../utils/connect.php');
 require_once(dirname(__FILE__).'/../utils/regex.php');
 
 
-
-$error= [];
 $id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
-$patient = new Patient();
-$profils=$patient->view($id);
+$error= [];
+
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -73,8 +71,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $patient->update();  
     }
     
-
 }
+
+$patient = new Patient();
+$profils=$patient->view($id);
 
 
 $title = "Modification du profil";
