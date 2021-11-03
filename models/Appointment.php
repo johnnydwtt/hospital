@@ -49,5 +49,31 @@ class Appointment{
         return $listappointment;
 
     }
+
+    public function update()
+    {
+        try{
+            $sql = "UPDATE  `appointements` SET `dateHour`=:dateHour WHERE `idPatients`=:idPatients;";
+
+            $sth = $this->_pdo->prepare($sql);
+
+            $sth->bindvalue(":dateHour", $this->_dateHour, PDO::PARAM_STR);
+            $sth->bindvalue(":idPatients", $this->_idPatients, PDO::PARAM_STR);
+
+            if($sth->execute()){
+                if ($sth->rowCount()==0) {
+                    $sth->rowCount();
+                } else {
+                    echo '<div class="fs-4 text-center text-success">'.'&#9989; Les modifications sont enregistrée avec succès'.'</div>';
+                }
+                
+                
+            }
+
+        } catch (\PDOException $ex) {
+            $ex->getMessage();
+        }
+
+    }
     
 }

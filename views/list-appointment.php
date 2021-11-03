@@ -15,9 +15,10 @@
 
                     <?php $dateFormat = strftime('%e %B %G à %Hh%M', strtotime($list->dateHour)); ?>
 
-                    <tr class="text-center align">
+                    <tr class="text-center">
                         <th scope="row" class="fw-lighter"><?=$list->idPatients?></th>
                         <td class="fw-lighter"> <?=$dateFormat?></td>
+                        <td><a href="/controllers/modif-appointmentCtrl.php?id=<?=$list->idPatients?>"><button>Modifier</button></a></td>
                     </tr>
                     
 
@@ -30,7 +31,7 @@
                     <a href="/controllers/welcomeCtrl.php"><button type="button" class="btn btn-primary">retouner à l'accueil</button></a>
                 </div>
                 <div class="col-lg-5 mb-3 text-center">
-                    <a href="/controllers/list-appointmentCtrl.php"><button type="button"
+                    <a href="/controllers/create-appointmentCtrl.php"><button type="button"
                             class="btn btn-primary">&#10133;</button></a>
                 </div>
             </div>

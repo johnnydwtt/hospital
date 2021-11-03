@@ -4,6 +4,7 @@ require_once(dirname(__FILE__).'/../config/conf.php');
 
 
 
+
 $title = 'Acceuil - Hospital';
 include(dirname(__FILE__).'/../views/templates/header.php');
 include(dirname(__FILE__).'/../views/welcome.php');
