@@ -14,16 +14,26 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <label for="hour" class="form-label">Heure :</label>
-                    <input name="hour" type="time" class="form-control text-muted" value="<?=htmlentities($hour ?? '')?>" 
-                    id="hour" aria-describedby="hour" required>
-                    <p class="text-danger"><?=$error['hour'] ?? NULL?></p>
+                <label for="hour" class="form-label">Choisir une heure:</label>
+
+                <select class="form-control text-muted" name="hour" id="hour">
+                    <option class="text-muted" value="">--Heure--</option>
+                    <option class="text-muted" value="10:00">10H00</option>
+                    <option class="text-muted" value="10:30">10H30</option>
+                    <option class="text-muted" value="11:00">11h00</option>
+                    <option class="text-muted" value="11:30">11h30</option>
+                    <option class="text-muted" value="13:00">13h00</option>
+                    <option class="text-muted" value="13:30">13h30</option>
+                    <option class="text-muted" value="14:00">14h00</option>
+                    <option class="text-muted" value="14:30">14h30</option>
+                </select>
+                <p class="text-danger"><?=$error['hour'] ?? NULL?></p>
                 </div>
 
                 <div class="col-lg-6">
-                <label for="pet-select" class="form-label">Choisir un patient:</label>
+                <label for="patient-select" class="form-label">Choisir un patient:</label>
 
-                <select class="form-control text-muted" name="patient" id="patient-select">
+                <select class="form-control text-muted" name="idPatients" id="patient-select">
                     <option class="text-muted" value="">-- Patient --</option>
                     <?php
                     foreach ($profils as $profil) {
@@ -36,7 +46,6 @@
                     ?>
 
                 </select>
-
                 </div>
 
 

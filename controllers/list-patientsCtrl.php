@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Patient.php');
+require_once(dirname(__FILE__).'/../config/conf.php');
 
 
 $patient = new Patient();

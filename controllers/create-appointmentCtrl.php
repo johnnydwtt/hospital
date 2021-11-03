@@ -1,20 +1,34 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Appointment.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
+require_once(dirname(__FILE__).'/../config/conf.php');
 require_once(dirname(__FILE__).'/../utils/connect.php');
 require_once(dirname(__FILE__).'/../utils/regex.php');
 
 $patient = new Patient();
-$profils=$patient->read();
+$profils = $patient->read();
 $error= [];
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    
+    
+
+    $idPatients = trim(filter_input(INPUT_POST, 'idPatients', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $hour = trim(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
-    $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
-    $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
 
+    $dateTime = $date.' '.$hour;
         // ----------------------------------------------------------
+    if(!empty($idPatients)){
+
+        if (!preg_match('/'. NUMBER_REGEX .'/',$idPatients)){
+            $error['idPatients'] = 'Saisir une date valide!';
+        }
+    } else { 
+        $error['idPatients'] = 'Ce champ est requis!';
+    }
+        //----------------------------------------------------------
     if(!empty($date)){
 
         if (!preg_match('/'. DATE_REGEX .'/',$date)){
@@ -24,27 +38,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $error['date'] = 'Ce champ est requis!';
     }
         // ----------------------------------------------------------
-    if(!empty($firstname)){
+    if(!empty($hour)){
 
-        if (!preg_match('/'. STRING_REGEX .'/',$firstname)){
-            $error['firstname'] = 'Saisir un prénom valide!';
+        if (!preg_match('/'. STRING_NUMBER_REGEX .'/',$hour)){
+            $error['hour'] = 'Saisir une heure valide!';
         }
     } else { 
-        $error['firstname'] = 'Ce champ est requis!';
-    }
-    
-    // ----------------------------------------------------------
-    if(!empty($lastname)){
-        if (!preg_match('/'. STRING_REGEX .'/',$lastname)){
-            $error['lastname'] = 'Saisir un nom valide!';
-        }
-    } else { 
-        $error['lastname'] = 'Ce champ est requis!';
+        $error['hour'] = 'Ce champ est requis!';
     }
 
     if (empty($error)) {
         
-        $appointment = new Appointment($date,$hour);
+        $appointment = new Appointment($dateTime,$idPatients);
         $created_at=$appointment->create();
     }
 

@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__).'/../models/Patient.php');
 require_once(dirname(__FILE__).'/../utils/connect.php');
 require_once(dirname(__FILE__).'/../utils/regex.php');
+require_once(dirname(__FILE__).'/../config/conf.php');
 
 
 $id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));

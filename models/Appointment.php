@@ -4,32 +4,50 @@ require_once(dirname(__FILE__).'/../utils/connect.php');
 
 class Appointment{
 
-    private $_date;
-    private $_hour;
+    private $_dateTime;
+    private $_idPatients;
 
-    public function __construct($date = NULL, $hour = NULL,$id =NULL)
+    public function __construct($dateTime = NULL, $idPatients = NULL)
     {
-        $this->_id = intval($id);
-        $this->_date = $date;
-        $this->_hour = $hour;
+        $this->_dateTime = $dateTime;
+        $this->_idPatients = $idPatients;
         $this->_pdo = Database::connect();
     }
 
     public function create(){
         try {
-            $sql = 'INSERT INTO `appointments`(`dateHour`) VALUES (:dateHour)';
+            $sql = 'INSERT INTO `appointments`(`dateHour`,`idPatients`) VALUES (:dateHour,:idPatients)';
             $sth = $this->_pdo->prepare($sql);
                     //on injecte les valeurs
-            $sth->bindvalue(":date", $this->_date, PDO::PARAM_STR);
-            $sth->bindvalue(":hour", $this->_hour, PDO::PARAM_INT);
+            $sth->bindvalue(":dateHour", $this->_dateTime, PDO::PARAM_STR);
+            $sth->bindvalue(":idPatients", $this->_idPatients, PDO::PARAM_STR);
 
             if(!$sth->execute()){
                 die("une erreur est survenue");
+                
+            }else{
+                return true;
             }
             
         } catch (\PDOException $ex) {
             $ex->getMessage();
+            return $ex;
         }
+        
+    }
+
+    public static function read()
+    {
+        $pdo = Database::connect();
+        $sql = 'SELECT `dateHour`,`idPatients` FROM `appointments`;';
+        //j'envoie ma requette pour récupérer toutes la tables patients que je stock dans une var
+
+        $sth = $pdo->query($sql);
+
+        $listappointment=$sth->fetchAll();
+        //je récupère l'intégralité de ma table ( données )
+        return $listappointment;
+
     }
     
 }

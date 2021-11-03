@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/../utils/connect.php');
+require_once(dirname(__FILE__).'/../config/conf.php');
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 

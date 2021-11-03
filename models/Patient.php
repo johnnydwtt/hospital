@@ -30,7 +30,7 @@ class Patient{
     public function create()
     {
         try {
-            $sql = 'INSERT INTO `patients`(`lastname`,`firstname`,`birthdate`,`phone`,`mail`) VALUES (:lastname,:firstname,:birthdate,:phone,:mail)';
+            $sql = 'INSERT INTO `patients`(`lastname`,`firstname`,`birthdate`,`phone`,`mail`) VALUES (:lastname,:firstname,:birthdate,:phone,:mail);';
             $sth = $this->_pdo->prepare($sql);
                     //on injecte les valeurs
             $sth->bindvalue(":lastname", $this->_lastname, PDO::PARAM_STR);
@@ -71,7 +71,7 @@ class Patient{
 
     public static function view($id)
     {
-        $sql = 'SELECT * FROM `patients` WHERE `id`=:id';
+        $sql = 'SELECT * FROM `patients` WHERE `id`=:id;';
         //j'envoie ma requette pour récupérer quelques élément de la table patient de l'id selectionné que je stock dans une var
         try {
             $pdo = Database::connect();
@@ -103,7 +103,7 @@ class Patient{
     public function update()
     {
         try{
-            $sql = "UPDATE  `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id";
+            $sql = "UPDATE  `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id;";
 
             $sth = $this->_pdo->prepare($sql);
 
@@ -136,14 +136,14 @@ class Patient{
     public function delete($id)
     {
         try{
-            $sql = 'DELETE FROM `patients` WHERE `id`= "'.$id.'"';
+            $sql = 'DELETE FROM `patients` WHERE `id`= :id;';
 
             $sth = $this->_pdo->prepare($sql);
 
             if(!$sth->execute()){
-                    echo "supréssion erreur";
+                    echo "Erreur est survenue";
                 }else {
-                    echo "supréssion effectué avec succès";
+                    echo "La supréssion c'est effectué avec succès";
                 }
 
         } catch (\PDOException $ex) {
