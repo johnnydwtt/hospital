@@ -1,32 +1,23 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Appointment.php');
+require_once(dirname(__FILE__).'/../models/Patient.php');
 require_once(dirname(__FILE__).'/../utils/connect.php');
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../config/conf.php');
 
+$idPatients = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
 
 $error= [];
 
-
+$id=intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
+$profile=Patient::view($id);
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-    
-    
 
-    $idPatients = trim(filter_input(INPUT_POST, 'idPatients', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $hour = trim(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
-
     $dateTime = $date.' '.$hour;
-        // ----------------------------------------------------------
-    if(!empty($idPatients)){
 
-        if (!preg_match('/'. NUMBER_REGEX .'/',$idPatients)){
-            $error['idPatients'] = 'Saisir une date valide!';
-        }
-    } else { 
-        $error['idPatients'] = 'Ce champ est requis!';
-    }
         //----------------------------------------------------------
     if(!empty($date)){
 
@@ -49,10 +40,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (empty($error)) {
         
         $appointment = new Appointment($dateTime,$idPatients);
-        $appointment->update();
+        $result = $appointment->update();
     }
-
 }
+$meet = Appointment::view($idPatients);
+
+
+
 
 
 $title = "Modification du rendez-vous";

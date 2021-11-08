@@ -6,8 +6,8 @@
             <table class="table">
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">Date</th>
+                        <th scope="col">Patient</th>
+                        <th scope="col">Rendez-vous</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -16,15 +16,41 @@
                     <?php $dateFormat = strftime('%e %B %G à %Hh%M', strtotime($list->dateHour)); ?>
 
                     <tr class="text-center">
-                        <th scope="row" class="fw-lighter"><?=$list->idPatients?></th>
+                        <th scope="row" class="fw-lighter"><a class="bg-light shadow-sm" href="/controllers/profil-patientCtrl.php?id=<?=$list->id?>"><?=$list->lastname.' '.$list->firstname?></a></th>
                         <td class="fw-lighter"> <?=$dateFormat?></td>
-                        <td><a href="/controllers/modif-appointmentCtrl.php?id=<?=$list->idPatients?>"><button>Modifier</button></a></td>
+                        <td><a href="/controllers/modif-appointmentCtrl.php?id=<?=$list->idPatients?>"><img src="https://img.icons8.com/material-rounded/30/000000/edit-property.png"/></a></td>
+                        <td class="fs-5"><button data-id="<?=$list->id?>" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete"><img src="https://img.icons8.com/emoji/30/000000/cross-mark-emoji.png"/></button></td>
                     </tr>
                     
 
                 <?php } ?>
+
                 </tbody>
                 </table>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteName" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="title">Supprimer</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                Êtes vous sûrs de vouloir surppimer le rendez-vous ?
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" id="confirm" class="btn btn-primary">Oui sûrs</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
                 
             <div class="row justify-content-between">
                 <div class="col-lg-7 mb-3 text-center">

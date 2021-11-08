@@ -74,8 +74,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     
 }
 
-$patient = new Patient();
-$profils=$patient->view($id);
+$profile=Patient::view($id);
 
 
 $title = "Modification du profil";

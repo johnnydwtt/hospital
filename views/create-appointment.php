@@ -31,15 +31,15 @@
                 </div>
 
                 <div class="col-lg-6">
-                <label for="patient-select" class="form-label">Choisir un patient:</label>
+                <label class="form-label">Choisir un patient:</label>
 
-                <select class="form-control text-muted" name="idPatients" id="patient-select">
+                <select class=" form-control text-muted" name="idPatients">
                     <option class="text-muted" value="">-- Patient --</option>
                     <?php
                     foreach ($profils as $profil) {
                     ?>
 
-                    <option class="text-muted" value="<?=$profil->id?>"><?=$profil->lastname?> <?=$profil->firstname?></option>
+                    <option class="text-muted"  value="<?=$profil->id?>"><?=$profil->lastname?> <?=$profil->firstname?></option>
 
                     <?php
                     }
@@ -52,11 +52,15 @@
                 <div class="row justicy-content-between mt-3">
 
                     <div class="col-lg-6 mb-3 text-center">
-                        <a href="/controllers/welcomeCtrl.php"><button type="button" class="btn btn-primary">retouner à l'accueil</button></a>
+                        <a href="/controllers/welcomeCtrl.php">
+                            <button type="button" class="btn btn-primary">retouner à l'accueil</button>
+                        </a>
                     </div>
 
                     <div class="col-lg-6 mb-3 text-center">
-                        <button type="submit" class="btn btn-primary">Valider</button>
+                        <a href="/controllers/list-appointmentCtrl.php">
+                            <button type="submit" class="btn btn-primary">Valider</button>
+                        </a>
                     </div>
             
                 </div>

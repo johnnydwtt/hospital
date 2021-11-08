@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-center bg-light shadow-lg mt-5 bg-img">
         <div class="row">
                 <?php 
-                    $formatDate = date('d/m/Y',strtotime($profile->birthdate));
+                    $formatDate = date('d/m/Y',strtotime($profile->birthdate));        
                 ?>
             <div class="row text-center text-dark  justify-content-center align-items-center">
                 <hr class="mt-3">
@@ -13,7 +13,23 @@
                     <div><span class="tomato fw-lighter mt-2">Prénom:</span> <?=$profile->firstname?> </div> 
                     <div><span class="tomato fw-lighter mt-2">Date de naissance:</span> <?=$formatDate?> </div> 
                     <div><span class="tomato fw-lighter mt-2">Téléphone:</span><a class="shadow-lg bg-light" href="tel:<?=$profile->phone?>"> <?=$profile->phone?></a></div> 
-                    <div><span class="tomato fw-lighter mt-2">Adresse email:</span><a class="shadow-lg bg-light" target="_blank" href="mailto:<?=$profile->mail?>"> <?=$profile->mail?></a></div> 
+                    <div><span class="tomato fw-lighter mt-2">Adresse email:</span><a class="shadow-lg bg-light" target="_blank" href="mailto:<?=$profile->mail?>"> <?=$profile->mail?></a></div>
+                    <hr>
+                    <div><span class="tomato fw-lighter fs-5">Rendez-vous:</span></div>
+                    <?php foreach ($profileCustom as $custom) {?>
+
+                    <?php $dateAppointment = strftime('%e %B %G à %Hh%M', strtotime($custom->dateHour ?? ''));?>
+                        <?php
+                            if(is_object($custom)) {
+                                echo "<div class='mt-2'>" . $dateAppointment ?? '' . "</div>";
+                            } else {
+                                echo "<span class='fw-lighter'>Aucun rendez-vous de prévue &#129396;</span>";
+                            }
+                            
+                        ?>
+                    
+
+                    <?php } ?>
                 </div>
                 <hr class="mt-3">
             </div>

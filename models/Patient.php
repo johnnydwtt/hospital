@@ -118,7 +118,7 @@ class Patient{
                 if ($sth->rowCount()==0) {
                     $sth->rowCount();
                 } else {
-                    echo '<div class="fs-4 text-center text-success">'.'&#9989; Les modifications sont enregistrée avec succès'.'</div>';
+                    return '<div class="fs-4 text-center text-success">'.'&#9989; Les modifications sont enregistrée avec succès'.'</div>';
                 }
                 
                 
@@ -133,24 +133,7 @@ class Patient{
 // **********************************************************************************
 // **********************************************************************************
 
-    public function delete($id)
-    {
-        try{
-            $sql = 'DELETE FROM `patients` WHERE `id`= :id;';
 
-            $sth = $this->_pdo->prepare($sql);
-
-            if(!$sth->execute()){
-                    echo "Erreur est survenue";
-                }else {
-                    echo "La supréssion c'est effectué avec succès";
-                }
-
-        } catch (\PDOException $ex) {
-            $ex->getMessage();
-        }
-        
-    }
 
 }
 
