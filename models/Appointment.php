@@ -41,7 +41,11 @@ class Appointment{
     public static function read()
     {
         $pdo = Database::connect();
-        $sql = 'SELECT * FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` ORDER BY `dateHour`;';
+        $sql = 'SELECT `appointments`.`idPatients` AS `idPat`,`appointments`.`id` AS `idApp`,`appointments`.`dateHour`,`patients`.`lastname`,`patients`.`firstname`,`patients`.`phone`,`patients`.`birthdate`,`patients`.`mail` 
+                FROM `appointments` 
+                LEFT JOIN `patients` 
+                ON `appointments`.`idPatients`=`patients`.`id` 
+                ORDER BY `dateHour`;';
         //j'envoie ma requette pour récupérer toutes la tables patients que je stock dans une var
 
         $sth = $pdo->query($sql);
@@ -140,17 +144,17 @@ class Appointment{
     public static function delete($id)
     {
         try{
-            $sql = 'DELETE FROM `appointments`.`id` WHERE `id`= :id;';
+            $sql = 'DELETE FROM `appointments` WHERE `id`= :id;';
 
             $pdo = Database::connect();
             $sth = $pdo->prepare($sql);
-            $sth->bindValue(':id', $id, PDO::PARAM_INT );
+            $sth->bindValue(':id', $id, PDO::PARAM_INT);
 
             if(!$sth->execute()){
-                    throw new PDOException('Une erreur est survenue') ;
-                }else {
-                    return $sth->rowCount();
-                }
+                throw new PDOException('Une erreur est survenue') ;
+            }else {
+                return $sth->rowCount();
+            }
 
         } catch (\PDOException $ex) {
             $ex->getMessage();

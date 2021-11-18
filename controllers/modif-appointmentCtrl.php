@@ -11,6 +11,7 @@ $error= [];
 
 $id=intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
 $profile=Patient::view($id);
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
@@ -43,6 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $result = $appointment->update();
     }
 }
+
 $meet = Appointment::view($idPatients);
 
 

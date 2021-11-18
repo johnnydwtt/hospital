@@ -53,17 +53,27 @@ class Patient{
 // **********************************************************************************
 // **********************************************************************************
 
-    public function read()
+    public static function read($search = NULL)
     {
         
-        $sql = 'SELECT * FROM `patients`';
-        //j'envoie ma requette pour récupérer toutes la tables patients que je stock dans une var
+        $pdo = Database::connect();
 
-        $sth = $this->_pdo->query($sql);
+        try{
 
-        $patient=$sth->fetchAll();
-        //je récupère l'intégralité de ma table ( données )
-        return $patient;
+        $sql = 'SELECT * FROM `patients` WHERE `lastname` LIKE :search ;';
+
+        // $sql = 'SELECT * FROM patients WHERE (lastname LIKE :search and firstname LIKE :search) ';
+        $sth = $pdo->prepare($sql);
+
+        $sth->bindValue(':search', '%' . $search . '%' , PDO::PARAM_STR);
+        $sth->execute();
+        $listpatients=$sth->fetchAll();
+        return $listpatients;
+
+        }catch(\PDOException $ex) {
+            $errorMessage =  $ex->getMessage();
+            return $errorMessage;
+        }
     }
 
 // **********************************************************************************
@@ -132,6 +142,26 @@ class Patient{
 
 // **********************************************************************************
 // **********************************************************************************
+    public static function deletePatient($id)
+        {
+            try{
+                $sql = 'DELETE FROM `patients` WHERE `id`= :id;';
+
+                $pdo = Database::connect();
+                $sth = $pdo->prepare($sql);
+                $sth->bindValue(':id', $id, PDO::PARAM_INT);
+
+                if(!$sth->execute()){
+                        throw new PDOException('Une erreur est survenue') ;
+                    }else {
+                        return $sth->rowCount();
+                    }
+
+            } catch (\PDOException $ex) {
+                $ex->getMessage();
+            }
+            
+        }
 
 
 

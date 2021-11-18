@@ -39,7 +39,7 @@
                     foreach ($profils as $profil) {
                     ?>
 
-                    <option class="text-muted"  value="<?=$profil->id?>"><?=$profil->lastname?> <?=$profil->firstname?></option>
+                    <option class="text-muted" value="<?=$profil->id?>"><?=$profil->lastname?> <?=$profil->firstname?></option>
 
                     <?php
                     }
@@ -58,9 +58,7 @@
                     </div>
 
                     <div class="col-lg-6 mb-3 text-center">
-                        <a href="/controllers/list-appointmentCtrl.php">
-                            <button type="submit" class="btn btn-primary">Valider</button>
-                        </a>
+                        <button type="submit" class="btn btn-primary">Valider</button>
                     </div>
             
                 </div>

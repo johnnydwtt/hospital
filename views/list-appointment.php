@@ -1,5 +1,8 @@
-<main class="container">
+<main>
+    <div class="container">
+
     <h1 class="text-center text-light border-bottom">Liste des rendez-vous</h1>
+
     <div class="d-flex justify-content-center bg-light shadow-lg mt-5 bg-img">
         <div class="row">
 
@@ -12,14 +15,15 @@
                 </thead>
                 <tbody> 
                 <?php foreach ($listappointment as $list) { ?>
+                    
 
                     <?php $dateFormat = strftime('%e %B %G à %Hh%M', strtotime($list->dateHour)); ?>
 
                     <tr class="text-center">
                         <th scope="row" class="fw-lighter"><a class="bg-light shadow-sm" href="/controllers/profil-patientCtrl.php?id=<?=$list->id?>"><?=$list->lastname.' '.$list->firstname?></a></th>
                         <td class="fw-lighter"> <?=$dateFormat?></td>
-                        <td><a href="/controllers/modif-appointmentCtrl.php?id=<?=$list->idPatients?>"><img src="https://img.icons8.com/material-rounded/30/000000/edit-property.png"/></a></td>
-                        <td class="fs-5"><button data-id="<?=$list->id?>" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete"><img src="https://img.icons8.com/emoji/30/000000/cross-mark-emoji.png"/></button></td>
+                        <td><a href="/controllers/modif-appointmentCtrl.php?id=<?=$list->idPat?>"><img src="https://img.icons8.com/material-rounded/30/000000/edit-property.png"/></a></td>
+                        <td class="fs-5"><button data-id="<?=$list->idApp?>" role="button" data-bs-toggle="modal" data-bs-target="#modalDelete"><img src="https://img.icons8.com/emoji/30/000000/cross-mark-emoji.png"/></button></td>
                     </tr>
                     
 
@@ -63,4 +67,27 @@
             </div>
         </div>
     </div>
+    </div>
+
+    <div class="container mb-5">
+        <ul class="pagination">
+            <li class="icon">
+            <a href="#"><span class="fas fa-angle-left"></span>Previous</a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#">9</a></li>
+            <li><a href="#">10</a></li>
+            <li class="icon">
+            <a href="#">Next<span class="fas fa-angle-right"></span></a>
+            </li>
+        </ul>
+    </div>
+
 </main>

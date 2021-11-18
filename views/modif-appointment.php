@@ -22,7 +22,7 @@
                 <label for="hour" class="form-label">Choisir une heure:</label>
 
                 <select class="form-control text-muted" name="hour" id="hour">
-                    <option class="text-muted" value="<?=$idPatients->dateTime?>"><?=$idPatients->dateTime?></option>
+                    <option class="text-muted" value="">Choisir -></option>
                     <option class="text-muted" value="10:00">10H00</option>
                     <option class="text-muted" value="10:30">10H30</option>
                     <option class="text-muted" value="11:00">11h00</option>

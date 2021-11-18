@@ -1,16 +1,14 @@
-var patient_id;
+var appointment_id;
 var myModalEl = document.getElementById('modalDelete');
 var confirmation = document.getElementById('confirm')
 
 
 
 myModalEl.addEventListener('show.bs.modal', function (event) {
-    patient_id = event.relatedTarget.dataset.id;
-    console.log(patient_id);
+    appointment_id = event.relatedTarget.dataset.id;
 })
 
 
 confirmation.addEventListener('click', function (){
-    document.location.href = '/controllers/deleteCtrl.php?id='+patient_id;
-
+    document.location.href = '/controllers/deleteCtrl.php?id='+appointment_id;
 })

@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $error['hour'] = 'Ce champ est requis!';
     }
 
-    if (empty($error)) {
+    if (!empty($error)) {
         
         $appointment = new Appointment($dateTime,$idPatients);
         $created_at=$appointment->create();
